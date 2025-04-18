@@ -160,6 +160,11 @@ func (p *OIDCProvider) redeemRefreshToken(ctx context.Context, s *sessions.Sessi
 		RefreshToken: s.RefreshToken,
 		Expiry:       time.Now().Add(-time.Hour),
 	}
+	logger.Printf(
+		"Refreshing session information - TokenURL: %s; RefreshToken: %s; TokenExpiry: %s",
+		c.Endpoint.TokenURL,
+		t.RefreshToken,
+		t.Expiry)
 	token, err := c.TokenSource(ctx, t).Token()
 	if err != nil {
 		return fmt.Errorf("failed to get token: %v", err)
